@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--header -->
+<head th:replace="layouts/fragments.html :: header"></head>
+<body>
+<nav th:replace="layouts/fragments.html :: main-nav"></nav>
+<!-- contents-->
+<contents>
+    <div>조회결과 입니다.</div>
+    <div th:each="movie : ${movie}" class="result-list">
+        <img th:src="${movie.poster}">
+        <span th:text="${movie.mvTitle}"></span>
+        <span th:text="${movie.nation}"></span>
+        <span th:text="${movie.director}">감독</span>
+        <a th:href="@{/movie/detail(mvno=${movie.mvNo})}">더보기</a>
+    </div>
+</contents>
+
+<footer th:replace="layouts/fragments.html :: footer"></footer>
+</body>
+</html>

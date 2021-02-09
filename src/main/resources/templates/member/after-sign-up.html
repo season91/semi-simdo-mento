@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="layouts/fragments.html :: main-nav"></div>
+
+<div class="container">
+<h1>
+    가입을 환영합니다.
+    <span th:text="${newMember.username}"></span>님!
+</h1>
+</div>
+</body>
+</html>
