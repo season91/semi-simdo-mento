@@ -2,10 +2,7 @@ package simdo.module.member;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
-@Table(name = "user")
+@Table(name = "USER")
 public class Member {
     @Id
     @GeneratedValue
@@ -24,30 +21,13 @@ public class Member {
 
     private String name;
 
+    private String email;
+
     private String password;
 
-    private LocalDateTime joinedAt;
+    private String bio;
 
-    private String generatedEmailToken;
-
-    private LocalDateTime emailTokenGeneratedAt;
-
-    private boolean isValid;
-
-
-    public void processJoin(){
-        generateEmailToken();
-        enterJoinedAtTime();
-    }
-
-
-    public void generateEmailToken() {
-        this.generatedEmailToken = UUID.randomUUID().toString();
-        this.emailTokenGeneratedAt = LocalDateTime.now();
-    }
-
-    public void enterJoinedAtTime(){
-        this.joinedAt = LocalDateTime.now();
-    }
+    @Lob @Basic(fetch = FetchType.EAGER)
+    private String profileImage;
 
 }

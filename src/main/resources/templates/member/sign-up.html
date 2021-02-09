@@ -1,14 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <title>Document</title>
-</head>
-<body>
+<head th:replace="layouts/fragments.html::head"></head>
+<body class="bg-light">
+<div th:replace="layouts/fragments.html :: main-nav"></div>
 <div class="container">
     <div class="py-5 text-center">
         <h2>계정 만들기</h2>
@@ -17,14 +11,26 @@
         <form class="needs-validation col-sm-6" action="#"
               th:action="@{/member/sign-up}" th:object="${signUpForm}" method="post" novalidate>
             <div class="form-group">
-                <label for="name">이름</label>
-                <input id="name" type="text" th:field="*{name}" class="form-control"
-                       placeholder="asdasd" aria-describedby="nameHelp" required minlength="2" maxlength="8">
-                <small id="nameHelp" class="form-text text-muted">
-                    공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
+                <label for="nickname">이름</label>
+                <input id="nickname" type="text" th:field="*{name}" class="form-control"
+                       placeholder="name" aria-describedby="nicknameHelp" required minlength="2" maxlength="8">
+                <small id="nicknameHelp" class="form-text text-muted">
+                    공백없이 문자와 숫자로만 2자 이상 8자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
                 </small>
-                <small class="invalid-feedback">닉네임을 입력하세요.</small>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Nickname
+                <small class="invalid-feedback">이름을 입력하세요.</small>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+                    Error</small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input id="email" type="email" th:field="*{email}" class="form-control"
+                       placeholder="your@email.com" aria-describedby="emailHelp" required>
+                <small id="emailHelp" class="form-text text-muted">
+                    사용자의 이메일은 공개되지 않습니다.
+                </small>
+                <small class="invalid-feedback">이메일을 입력하세요.</small>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
                     Error</small>
             </div>
 
@@ -50,7 +56,9 @@
             </div>
         </form>
     </div>
+
+    <div class="layouts/fragments.html :: footer"></div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script th:replace="layouts/fragments.html :: form-validation"></script>
 </body>
 </html>

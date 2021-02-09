@@ -22,17 +22,8 @@ public class MemberService {
                 .name(signUpForm.getName())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .build();
-        member.processJoin();
 
         Member newMember = memberRepository.save(member);
         return newMember;
-    }
-
-//    이메일 인증
-    public void sendVerifyingEmail(){
-        Member member = memberRepository.findByName("심도도도");
-        if(member.getGeneratedEmailToken().equals("asdkjaskdjaskd")){
-            member.setValid(true);
-        }
     }
 }
