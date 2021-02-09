@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/fragments.html :: header"></head>
+<body>
+<!--NAVBAR-->
+<nav th:replace="layouts/fragments.html :: main-nav"></nav>
+
+<!--CONTENTS-->
+<div class="m-5 bg-dark text-white text-center">
+    <h1 th:text="${username}"/>
+</div>
+<!--FOOTER-->
+
+<footer th:replace="layouts/fragments.html :: footer"></footer>
+</body>
+</html>

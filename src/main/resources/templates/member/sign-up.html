@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+
+<div class="container">
+<form action="/member/sign-up" method="post">
+    <input type="text" name="email">
+    <input type="password" name="password">
+    <button type="submit">가입</button>
+</form>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--header -->
+<head th:replace="layouts/fragments.html :: header"></head>
+<body>
+<nav th:replace="layouts/fragments.html :: main-nav"></nav>
+<!-- contents-->
+<contents>
+    <div th:each="movie : ${movie}">
+        <img th:src="${movie.poster}">
+        <span th:text="${movie.mvTitle}"></span>
+        <a th:href="@{/movie/detail(mvno=${movie.mvNo})}">더보기</a>
+    </div>
+</contents>
+
+<footer th:replace="layouts/fragments.html :: footer"></footer>
+</body>
+</html>
