@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
-@Table(name = "TB_MEMBER")
+@Table(name = "user")
 public class Member {
     @Id
     @GeneratedValue

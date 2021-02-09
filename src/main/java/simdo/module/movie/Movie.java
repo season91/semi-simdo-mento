@@ -14,8 +14,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "mv_basic_info")
 public class Movie {
-
     @Id
     @Column(nullable = false, name = "MV_NO")
     private String mvNo;

@@ -26,5 +26,13 @@ public class SignUpFormValidator implements Validator {
             errors.rejectValue("name","invalid.name",new Object[]{signUpForm.getName()},"이미 사용중인 이름입니다.");
         }
 
+        if(signUpForm.getName().contains("박근혜")){
+            errors.rejectValue("name","invalid.name",new Object[]{signUpForm.getName()},"박근혜 꺼졍.");
+        }
+
+        if(signUpForm.getName().contains("일베")){
+            errors.rejectValue("name","invalid.name",new Object[]{signUpForm.getName()},"일베충 꺼졍.");
+        }
+
     }
 }
