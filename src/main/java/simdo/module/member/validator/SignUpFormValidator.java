@@ -23,7 +23,7 @@ public class SignUpFormValidator implements Validator {
         SignUpForm signUpForm = (SignUpForm) target;
 
         if (memberRepository.existsByName(signUpForm.getName())){
-            errors.rejectValue("name","AKDJFKLA",new Object[]{signUpForm.getName()},"이미 사용중인 이름입니다.");
+            errors.rejectValue("name","invalid.name",new Object[]{signUpForm.getName()},"이미 사용중인 이름입니다.");
         }
 
     }
