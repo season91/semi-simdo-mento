@@ -88,7 +88,7 @@ public class MemberController {
         model.addAttribute(memberToView);
         model.addAttribute("memberToView", memberToView); /*조민희코드추가*/
         model.addAttribute("isOwner", memberToView.equals(member));
-        return "account/profile";
+        return "member/profile";
     }
 
     @GetMapping("/email-login")
