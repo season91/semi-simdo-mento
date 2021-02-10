@@ -1,7 +1,6 @@
 package simdo.module.movie;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "mv_basic_info")
+@Table(name = "MV_BASIC_INFO")
 public class Movie {
     @Id
     @Column(nullable = false, name = "MV_NO")
@@ -23,21 +22,29 @@ public class Movie {
     @Column(nullable = false)
     private String mvTitle;
 
+    private String mvTitleorg;
+
     private Long score;
 
     @Column(nullable = false)
     private String director;
 
+    @Column(nullable = false)
     private String genre;
 
+    @Column(nullable = false)
     private LocalDate releaseDate;
 
+    @Column(nullable = false)
     private String plot;
 
+    @Column(nullable = false)
     private String nation;
 
+    @Column(nullable = false)
     private Long runtime;
 
+    @Column(nullable = false)
     private String rating;
 
     private String thumbnail;
