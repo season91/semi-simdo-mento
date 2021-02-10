@@ -107,10 +107,11 @@ public class MemberService implements UserDetailsService{
         login(member);
     }
 
-    public Member getAccount(String name) {
-        Member member = memberRepository.findByName(name);
+    public Member getAccount(String /*name*/ email) {
+//        Member member = memberRepository.findByName(name);  멘토님 코드
+        Member member = memberRepository.findByEmail(email); /*조민희 코드 추가*/
         if (member == null) {
-            throw new IllegalArgumentException(name + "에 해당하는 사용자가 없습니다.");
+            throw new IllegalArgumentException(email + "에 해당하는 사용자가 없습니다.");
         }
         return member;
     }

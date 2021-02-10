@@ -82,10 +82,11 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile/{nickname}")
-    public String viewProfile(@PathVariable String nickname, Model model, @CurrentMember Member member) {
-        Member memberToView = memberService.getAccount(nickname);
+    @GetMapping("/profile/{email}")
+    public String viewProfile(@PathVariable String /*nickname*/ email, Model model, @CurrentMember Member member) {
+        Member memberToView = memberService.getAccount(email);
         model.addAttribute(memberToView);
+        model.addAttribute("memberToView", memberToView); /*조민희코드추가*/
         model.addAttribute("isOwner", memberToView.equals(member));
         return "account/profile";
     }
