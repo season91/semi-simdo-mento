@@ -184,7 +184,8 @@
                     <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
                         <button class="dropdown-item" type="submit">로그아웃</button>
                     </form>
-                    <form class="form-inline my-2 my-lg-0" action="#" method="post">
+                    <div class="dropdown-divider"></div>
+                    <form class="form-inline my-2 my-lg-0" action="#" th:action="@{'/member/quit/' + ${#authentication.name}}" method="post">
                         <button class="dropdown-item" type="submit">회원 탈퇴</button>
                     </form>
                 </div>

@@ -23,7 +23,7 @@ public class Member {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -35,7 +35,7 @@ public class Member {
 
     private LocalDate birthday; //컬럼추가
 
-    private boolean emailVerified;
+    private int emailVerified;
 
     private String emailCheckToken;
 
@@ -50,7 +50,7 @@ public class Member {
     private String profileImage;
 
     @Column(nullable = false)
-    private int isLeave = 0;
+    private int isLeave;
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
@@ -58,7 +58,7 @@ public class Member {
     }
 
     public void completeSignUp() {
-        this.emailVerified = true;
+        this.emailVerified = 1;
         this.joinedAt = LocalDateTime.now();
     }
 

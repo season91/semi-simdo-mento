@@ -107,7 +107,7 @@ public class MemberService implements UserDetailsService{
         login(member);
     }
 
-    public Member getAccount(String /*name*/ email) {
+    public Member getAccount(String email) {
 //        Member member = memberRepository.findByName(name);  멘토님 코드
         Member member = memberRepository.findByEmail(email); /*조민희 코드 추가*/
         if (member == null) {
@@ -121,4 +121,7 @@ public class MemberService implements UserDetailsService{
         memberRepository.save(member);
     }
 
+    public void quit(Member memberToQuit) {
+        memberRepository.deleteById(memberToQuit.getId());
+    }
 }
