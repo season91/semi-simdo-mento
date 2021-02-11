@@ -10,6 +10,9 @@ import simdo.module.member.Member;
 import simdo.module.notice.form.NoticeForm;
 
 import java.util.List;
+/**
+ * @author choayoung
+ */
 
 @Controller
 @RequiredArgsConstructor
@@ -40,7 +43,7 @@ public class NoticeController {
         return "notice/main";
     }
 
-    // 공지사항 상세내용 가져오기.
+    // 공지사항 번호 기준으로 상세내용 가져오기.
     @GetMapping(value = "/detail")
     public String noticeDetail(Model model, Long noticeno){
         Notice notice = noticeService.noticeDetail(noticeno);

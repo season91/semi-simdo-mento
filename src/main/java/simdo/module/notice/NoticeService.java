@@ -8,6 +8,9 @@ import simdo.module.notice.form.NoticeForm;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * @author choayoung
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -31,7 +34,7 @@ public class NoticeService {
         return noticeList;
     }
 
-    //
+    // 공지사항 번호 기준으로 공지 1개 가져오기.
     public Notice noticeDetail(Long noticeNo){
         Notice notice = noticeRepository.findNoticeById(noticeNo);
         return notice;
