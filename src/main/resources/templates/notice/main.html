@@ -6,11 +6,16 @@
 <nav th:replace="layouts/fragments.html::main-nav"></nav>
 
 <!--CONTENTS-->
-<contents style="display: flex; flex-direction: column; align-items: center;">
-    <div>공지사항 목록</div>
-    <a th:href="@{/notice/write}">등록하러가기</a>
-    <div class="list-group">
+<contents style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 15vh;">
+    <h1>공지사항 목록</h1>
+    <a th:href="@{/notice/write}">공지사항 등록</a>
+    <div class="list-group" style="margin: 5vh; width: 100%">
         <a th:each="notice : ${notice}" th:text="${notice.title}" th:href="@{/notice/detail(noticeno=${notice.id})}" class="list-group-item list-group-item-action"></a>
+    </div>
+    <div th:if="${notice.getTotalPages()}" th:with="page=${notice.getTotalPages()}" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div th:each="num : ${#numbers.sequence(1,page)}" class="btn-group me-2" role="group" aria-label="Second group">
+            <a th:text="${num}" th:href="@{/notice(page=${num-1})}" type="button" class="btn btn-secondary"></a>
+        </div>
     </div>
 </contents>
 

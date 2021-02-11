@@ -1,6 +1,10 @@
 package simdo.module.notice;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,9 +41,9 @@ public class NoticeController {
 
     // 공지사항 메인으로, 공지사항 리스트 출력되어야 한다.
     @GetMapping(value = "")
-    public String notice(Model model){
-        List<Notice> noticeList = noticeService.noticeAll();
-        model.addAttribute("notice",noticeList);
+    public String notice(Model model, @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+        Page<Notice> notice = noticeService.getNoticeList(pageable);
+        model.addAttribute("notice",notice);
         return "notice/main";
     }
 
@@ -50,4 +54,5 @@ public class NoticeController {
         model.addAttribute("notice",notice);
         return "notice/detail";
     }
+
 }

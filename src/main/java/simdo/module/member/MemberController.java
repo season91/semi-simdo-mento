@@ -1,6 +1,7 @@
 package simdo.module.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -124,5 +125,16 @@ public class MemberController {
         }
         memberService.login(member);
         return view;
+    }
+
+    @PostMapping("/quit/{email}")
+    public String memberQuit(@PathVariable String email, Model model) {
+        Member memberToQuit = memberService.getAccount(email);
+        model.addAttribute(memberToQuit);
+        model.addAttribute("memberToView", memberToQuit);
+        memberService.quit(memberToQuit);
+        SecurityContextHolder.clearContext();
+
+        return "redirect:/";
     }
 }

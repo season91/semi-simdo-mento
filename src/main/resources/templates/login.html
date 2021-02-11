@@ -33,7 +33,8 @@
                 <input id="password" type="password" name="password" class="form-control"
                        aria-describedby="passwordHelp" required>
                 <small id="passwordHelp" class="form-text text-muted">
-                    패스워드가 기억나지 않는다면, <a href="#" th:href="@{/member/email-login}">패스워드 없이 로그인하기</a>
+                    패스워드가 기억나지 않는다면, <a href="#" th:href="@{/member/email-login}">패스워드 없이 로그인하기</a><br>
+                    혹은 <a th:href="@{/member/find-password}">패스워드 찾기</a>를 이용하세요.
                 </small>
                 <small class="invalid-feedback">패스워드를 입력하세요.</small>
             </div>
