@@ -1,12 +1,17 @@
 package simdo.module.notice;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import simdo.module.notice.form.NoticeForm;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author choayoung
@@ -38,5 +43,11 @@ public class NoticeService {
     public Notice noticeDetail(Long noticeNo){
         Notice notice = noticeRepository.findNoticeById(noticeNo);
         return notice;
+    }
+
+
+    // 페이징 처리
+    public Page<Notice> getNoticeList(Pageable pageable){
+        return  noticeRepository.findAll(pageable);
     }
 }
