@@ -6,18 +6,19 @@
 <nav th:replace="layouts/fragments.html::main-nav"></nav>
 
 <!--CONTENTS-->
-<form th:action="@{/notice/write}" th:object="${noticeForm}" method="post">
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">공지사항 제목 입력하세요.</label>
-        <input th:field="*{subject}"  type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">공지사항 내용 입력하세요.</label>
-        <input th:field="*{content}" type="text" class="form-control" id="exampleInputPassword1">
-    </div>
-    <button type="submit" class="btn btn-primary">등록</button>
-</form>
-
+<contents style="padding: 10vh; display: flex; flex-direction: column; justify-content: center;">
+    <form th:action="@{/notice/write}" th:object="${noticeForm}" method="post">
+        <div class="mb-3">
+            <label for="InputTitle" class="form-label">공지사항 제목 입력하세요.</label>
+            <input th:field="*{subject}"  type="text" class="form-control" id="InputTitle" aria-describedby="emailHelp" >
+        </div>
+        <div class="mb-3">
+            <label for="InputContent" class="form-label">공지사항 내용 입력하세요.</label>
+            <textarea th:field="*{content}" style="height: 20vh" class="form-control" aria-label="With textarea" id="InputContent"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">등록</button>
+    </form>
+</contents>
 <footer th:replace="layouts/fragments.html::footer"></footer>
 </body>
 

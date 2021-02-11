@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/fragments.html::head">
+</head>
+<body>
+<nav th:replace="layouts/fragments.html::main-nav"></nav>
+
+<!--CONTENTS-->
+<contents style="display: flex; justify-content: center; padding: 10vh; text-align: center">
+    <div class="card text-white bg-dark mb-3">
+        <div class="card-header"> 공지사항 상세 </div>
+        <div class="card-body">
+            <h5 th:text="${notice.title}" class="card-title"></h5>
+            <p th:text="${notice.content}" class="card-text"></p>
+        </div>
+    </div>
+</contents>
+<footer th:replace="layouts/fragments.html::footer"></footer>
+</body>
+
+<script>
+</script>
+</html>

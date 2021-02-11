@@ -25,9 +25,15 @@ public class NoticeService {
         return notice;
     }
 
+    // 공지사항 개수 가져오기. 게시판 페이징처리는 멘토님께서 도와주신다고 하셨는데 문의해보기!
     public List<Notice> noticeAll(){
         List<Notice> noticeList =  noticeRepository.findAll();
         return noticeList;
     }
 
+    //
+    public Notice noticeDetail(Long noticeNo){
+        Notice notice = noticeRepository.findNoticeById(noticeNo);
+        return notice;
+    }
 }

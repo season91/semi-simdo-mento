@@ -6,11 +6,11 @@
 <nav th:replace="layouts/fragments.html::main-nav"></nav>
 
 <!--CONTENTS-->
-<div>공지사항 목록</div>
-<a th:href="@{/notice/write}">등록하러가기</a>
-<contents>
+<contents style="display: flex; flex-direction: column; align-items: center;">
+    <div>공지사항 목록</div>
+    <a th:href="@{/notice/write}">등록하러가기</a>
     <div class="list-group">
-        <a th:each="notice : ${notice}" th:text="${notice.title}"href="#" class="list-group-item list-group-item-action"></a>
+        <a th:each="notice : ${notice}" th:text="${notice.title}" th:href="@{/notice/detail(noticeno=${notice.id})}" class="list-group-item list-group-item-action"></a>
     </div>
 </contents>
 
