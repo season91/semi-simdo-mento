@@ -105,7 +105,7 @@
                    aria-haspopup="true" aria-expanded="false">나라별
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="nationDropdown">
-                    <a class="dropdown-item" th:href="@{/movie/nation(nation=대한민국)}">대한민국</a>
+                    <a class="dropdown-item" th:href="@{/movie/nation(nation=미국)}">미국</a>
                     <a class="dropdown-item" th:href="@{/movie/nation(nation=프랑스)}">프랑스</a>
                 </div>
             </li>
@@ -116,7 +116,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="genreDropdown">
                     <a class="dropdown-item" th:href="@{/movie/genre(genre=드라마)}">드라마</a>
-                    <a class="dropdown-item" th:href="@{/movie/genre(genre=스릴러)}">스릴러</a>
+                    <a class="dropdown-item" th:href="@{/movie/genre(genre=로맨스)}">로맨스</a>
                 </div>
             </li>
 
@@ -132,13 +132,14 @@
                    aria-haspopup="true" aria-expanded="false">영화가져오기
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="genreDropdown">
-                    <a class="dropdown-item" th:href="@{/movie/get-movie}">프랑스영화</a>
+                    <a class="dropdown-item" th:href="@{/movie/get-movie(title=라라랜드)}">미국(라라랜드)</a>
+                    <a class="dropdown-item" th:href="@{/movie/get-movie(title=아이엠히어)}">프랑스(아이엠히어)</a>
                 </div>
             </li>
 
             <li class="nav-item">
                 <form th:action="@{/movie/search}" class="form-inline" method="get">
-                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="영화 찾기" aria-label="Search" />
+                    <input class="form-control mr-sm-2" name="title" type="search" placeholder="영화 찾기" aria-label="Search" />
                 </form>
             </li>
         </ul>

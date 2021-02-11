@@ -1,10 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts/fragments.html :: header"></head>
-
+<head th:replace="layouts/fragments.html::head">
+</head>
 <body>
-<nav th:replace="layouts/fragments.html :: main-nav"></nav>
-<div>영화 조회를 해보세요!</div>
-<footer th:replace="layouts/fragments.html :: footer"></footer>
+<nav th:replace="layouts/fragments.html::main-nav"></nav>
+
+<!--CONTENTS-->
+<contents style="display: flex; justify-content: center; padding-top: 10vh; padding-bottom: 10vh;">
+    <div class="card mb-3" style="max-width: 700px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img th:src="${movie.poster}" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${movie.mvTitle}"></h5>
+                    <p class="card-text" th:text="${movie.director}"></p>
+                    <p class="card-text" th:text="${movie.rating}"></p>
+                    <p class="card-text" th:text="${movie.nation}"></p>
+                    <p class="card-text" th:text="${movie.plot}"></p>
+                    <p class="card-text"><a class="text-muted">후기 작성</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</contents>
+<footer th:replace="layouts/fragments.html::footer"></footer>
 </body>
+
+<script>
+</script>
 </html>

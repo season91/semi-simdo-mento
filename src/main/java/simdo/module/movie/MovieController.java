@@ -16,16 +16,17 @@ import java.util.Map;
 @Controller
 // 매개변수 있는 생성자 어노테이션
 @RequiredArgsConstructor
+// uri 주소의 1뎁스부분 고정시 사용하는 어노테이션
 @RequestMapping(value = "/movie")
 public class MovieController {
 
     private final MovieService movieService;
 
     @GetMapping(value = "/get-movie")
-    public String getMovie(){
+    public String getMovie(String title){
         // 영화 정보를 받은 후에 movie에 저장해준다.
-        Map<String, Object> movieMap = movieService.kmdbAPI();
-        String thumbnail = movieService.naverMovieAPI();
+        Map<String, Object> movieMap = movieService.kmdbAPI(title);
+        String thumbnail = movieService.naverMovieAPI(title);
         movieService.saveMovie(movieMap, thumbnail);
         return "index";
     }
@@ -53,8 +54,8 @@ public class MovieController {
     }
 
     @GetMapping(value = "/detail")
-    public String movieSearchByMvNo(Model model, String mvNo){
-        Movie movie = movieService.movieSearchByMvNo(mvNo);
+    public String movieSearchByMvNo(Model model, String mvno){
+        Movie movie = movieService.movieSearchByMvNo(mvno);
         model.addAttribute("movie",movie);
         return "movie/detail";
     }
