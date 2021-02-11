@@ -16,7 +16,7 @@
                     <p class="card-text" th:text="${movie.plot}">
                 </div>
                 <div class="card-footer">
-                    <a class="text-muted" th:href="@{/movie/detail(mvno=${movie.mvNo})}">read more</a>
+                    <a class="text-muted" th:href="@{'/movie/detail/' + ${#authentication.name}(mvno=${movie.mvNo})}">read more</a>
                 </div>
             </div>
         </div>
