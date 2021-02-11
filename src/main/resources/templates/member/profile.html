@@ -6,13 +6,13 @@
 <nav th:replace="layouts/fragments.html::main-nav"></nav>
 <!--210210 조민희-->
 <section class="jumbotron">
-    <h1 class="display-4">User Profile</h1><br>
+    <h1 class="display-4">PROFILE</h1><br>
     <span class="lead">반갑습니다 </span><span class="lead" th:text="${memberToView.getName()}"></span><span class="lead">님!</span>
     <p class="lead">SIMDO with MOVIE를 이용해주셔서 감사합니다.</p>
     <span class="lead" th:text="${memberToView.getName()}"></span><span class="lead">님의 프로필 정보를 설정해주세요!</span>
     <hr class="my-4">
     <p class="text-muted">
-        <form>
+        <form th:action="@{/member/update-info}" th:object="${UpdateForm}" method="post">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
@@ -32,14 +32,14 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Phone</label>
+                <label for="inputPhone3" class="col-sm-2 col-form-label">Phone</label>
                 <div class="col-sm-10">
-                    <input type="tel" class="form-control" id="inputPhone3" placeholder="Password">
+                    <input type="tel" class="form-control" id="inputPhone3" placeholder="Phone">
                 </div>
             </div>
             <fieldset class="form-group">
                 <div class="row">
-                    <legend class="col-form-label col-sm-2 pt-0">성별</legend>
+                    <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="memberGender" id="gridRadios1" value="M">
@@ -57,8 +57,14 @@
                 </div>
             </fieldset>
             <div class="form-group row">
+                <label for="inputBirth3" class="col-sm-2 col-form-label">Birthday</label>
                 <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">수정</button>
+                    <input type="date" class="form-control" id="inputBirth3">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">설정하기</button>
                 </div>
             </div>
         </form>

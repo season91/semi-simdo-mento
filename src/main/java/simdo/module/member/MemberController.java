@@ -83,7 +83,7 @@ public class MemberController {
     }
 
     @GetMapping("/profile/{email}")
-    public String viewProfile(@PathVariable String /*nickname*/ email, Model model, @CurrentMember Member member) {
+    public String viewProfile(@PathVariable String email, Model model, @CurrentMember Member member) {
         Member memberToView = memberService.getAccount(email);
         model.addAttribute(memberToView);
         model.addAttribute("memberToView", memberToView); /*조민희코드추가*/

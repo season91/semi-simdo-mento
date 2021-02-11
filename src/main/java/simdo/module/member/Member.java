@@ -3,6 +3,7 @@ package simdo.module.member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,19 +14,26 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
-@Table(name = "USER")
+@Table(name = "MEMBER")
 public class Member {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String password;
+
+    private String gender; //컬럼추가
+
+    private String phone; //컬럼추가
+
+    private LocalDate birthday; //컬럼추가
 
     private boolean emailVerified;
 
@@ -41,6 +49,8 @@ public class Member {
     @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 
+    @Column(nullable = false)
+    private int isLeave = 0;
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
