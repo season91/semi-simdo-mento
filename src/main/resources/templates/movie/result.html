@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!--header -->
-<head th:replace="layouts/fragments.html :: header"></head>
+<head th:replace="layouts/fragments.html::head">
+</head>
 <body>
-<nav th:replace="layouts/fragments.html :: main-nav"></nav>
-<!-- contents-->
+<nav th:replace="layouts/fragments.html::main-nav"></nav>
+
+<!--CONTENTS-->
 <contents>
     <div th:each="movie : ${movie}">
         <img th:src="${movie.poster}">
@@ -13,6 +14,9 @@
     </div>
 </contents>
 
-<footer th:replace="layouts/fragments.html :: footer"></footer>
+<footer th:replace="layouts/fragments.html::footer"></footer>
 </body>
+
+<script>
+</script>
 </html>

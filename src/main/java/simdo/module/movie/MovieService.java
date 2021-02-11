@@ -148,4 +148,20 @@ public class MovieService {
                 .build();
         movieRepository.save(movie);
     }
+
+    public List<Movie> movieSearchByNation(String nation){
+        return movieRepository.findMovieByNationContains(nation);
+    }
+
+    public List<Movie> movieSearchByGenre(String genre){
+        return  movieRepository.findMovieByGenreContains(genre);
+    }
+
+    public List<Movie> movieSearchByTitle(String title){
+        return  movieRepository.findMovieByMvTitleContains(title);
+    }
+
+    public Movie movieSearchByMvNo(String mvNo){
+        return movieRepository.findMovieByMvNo(mvNo);
+    }
 }

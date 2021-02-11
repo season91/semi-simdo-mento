@@ -99,6 +99,43 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="nationDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">나라별
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="nationDropdown">
+                    <a class="dropdown-item" th:href="@{/movie/nation(nation=대한민국)}">대한민국</a>
+                    <a class="dropdown-item" th:href="@{/movie/nation(nation=프랑스)}">프랑스</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="genreDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">장르별
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="genreDropdown">
+                    <a class="dropdown-item" th:href="@{/movie/genre(genre=드라마)}">드라마</a>
+                    <a class="dropdown-item" th:href="@{/movie/genre(genre=스릴러)}">스릴러</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="#" id="score" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">평점순
+                </a>
+
+            </li>
+
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="#" id="reivew" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">영화가져오기
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="genreDropdown">
+                    <a class="dropdown-item" th:href="@{/movie/get-movie}">프랑스영화</a>
+                </div>
+            </li>
+
             <li class="nav-item">
                 <form th:action="@{/movie/search}" class="form-inline" method="get">
                     <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="영화 찾기" aria-label="Search" />
