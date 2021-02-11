@@ -32,7 +32,7 @@ public class Notice {
     @Column(name = "reg_date")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_no")
-    private Member member;
+//    @ManyToOne(fetch = LAZY)
+//    @JoinColumn(name = "user_no")
+//    private Member member;
 }

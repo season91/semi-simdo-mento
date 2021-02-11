@@ -6,7 +6,13 @@
 <nav th:replace="layouts/fragments.html::main-nav"></nav>
 
 <!--CONTENTS-->
-
+<div>공지사항 목록</div>
+<a th:href="@{/notice/write}">등록하러가기</a>
+<contents>
+    <div class="list-group">
+        <a th:each="notice : ${notice}" th:text="${notice.title}"href="#" class="list-group-item list-group-item-action"></a>
+    </div>
+</contents>
 
 <footer th:replace="layouts/fragments.html::footer"></footer>
 </body>
