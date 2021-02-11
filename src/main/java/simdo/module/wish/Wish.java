@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class Wish {
 
     @Id
+    @GeneratedValue
     @Column(nullable = false, name = "WISH_NO")
     private long wishNo;
 
