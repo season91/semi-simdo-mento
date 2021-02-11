@@ -27,16 +27,18 @@ public class MovieService {
     private final MovieRepository movieRepository;
 
     // 영화 기본 정보 가지고 올 영화 API
-    public Map<String, Object> kmdbAPI(){
+    public Map<String, Object> kmdbAPI() {
         HttpUtil util = new HttpUtil();
         ObjectMapper om = new ObjectMapper();
+        String SERVICE_KEY = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?ServiceKey=RLYJPR31F2X100MT6HX3&query=";
+
 
         // 쿼리문 변경해가면서 h2에 데이터 넣자!
         //1. 아이엠히어
-        String url = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?ServiceKey=RLYJPR31F2X100MT6HX3&query=알랭샤바&actor=배두나&detail=Y&collection=kmdb_new2&listCount=1";
+        String url = SERVICE_KEY + "알랭샤바&actor=배두나&detail=Y&collection=kmdb_new2&listCount=1";
 
         //2. 라라랜드
-        //String url = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?ServiceKey=RLYJPR31F2X100MT6HX3&query=엠마&actor=라이언고슬링&detail=Y&collection=kmdb_new2&listCount=1";
+        //String url = SERVICE_KEY+ "엠마&actor=라이언고슬링&detail=Y&collection=kmdb_new2&listCount=1";
 
         String json = util.get(url);
 
@@ -57,11 +59,11 @@ public class MovieService {
             e.printStackTrace();
         }
         System.out.println(resultMap);
-        return  resultMap;
+        return resultMap;
     }
 
     // 영화 썸네일 가지고 올 네이버영화 API
-    public String naverMovieAPI(){
+    public String naverMovieAPI() {
         HttpUtil util = new HttpUtil();
         String clientId = "1TOE19GYAcgawcD0ESm1";
         String clientSecret = "tmgwvMjtQF";
@@ -87,23 +89,23 @@ public class MovieService {
 
         String jsonRes = util.get(apiURL, requestHeaders);
 
-        String thumbnail = null;
+        String thumbNail = "";
         try {
             Map resMap = om.readValue(jsonRes, Map.class);
             List<String> itemsList = (List<String>) resMap.get("items");
             String itemsStr = om.writeValueAsString(itemsList.get(0));
             Map itemsMap = om.readValue(itemsStr, Map.class);
-            thumbnail = (String) itemsMap.get("image");
+            thumbNail = (String) itemsMap.get("image");
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(thumbnail);
-        return thumbnail;
+        System.out.println(thumbNail);
+        return thumbNail;
     }
 
     // json 한번더 파싱해야 하는 경우 사용할 메서드
-    public Map<String, Object> listSeparation(Map<String, Object> map, String beforecategory, String aftercategory){
+    public Map<String, Object> listSeparation(Map<String, Object> map, String beforecategory, String aftercategory) {
         ObjectMapper om = new ObjectMapper();
         Map<String, Object> resMap = null;
         Map<String, Object> beforeMap = (Map<String, Object>) map.get(beforecategory);
@@ -118,17 +120,17 @@ public class MovieService {
     }
 
     // poster 배열로 잘라주고 사진 1개 반환
-    public String posterSplit(Map<String, Object> map, String category){
+    public String posterSplit(Map<String, Object> map, String category) {
         String posters = (String) map.get(category);
         String[] posterArr = posters.split("[|]");
         return posterArr[0];
     }
 
     // 영화정보들 movie에 넣어준다.
-    public void saveMovie(Map movieMap, String thumbnail){
+    public void saveMovie(Map movieMap, String thumbnail) {
         // 감독이랑, 줄거리를 한번더 분리해줘야 한다.
-        Map<String, Object> directMap = listSeparation(movieMap,"directors","director");
-        Map<String, Object> plotMap = listSeparation(movieMap, "plots","plot");
+        Map<String, Object> directMap = listSeparation(movieMap, "directors", "director");
+        Map<String, Object> plotMap = listSeparation(movieMap, "plots", "plot");
         // poster 는 배열로 분리해서 첫번째 것만 가져온다.
         String posterLink = posterSplit(movieMap, "posters");
 
@@ -138,10 +140,10 @@ public class MovieService {
                 .mvTitleorg((String) movieMap.get("titleOrg"))
                 .director((String) directMap.get("directorNm"))
                 .genre((String) movieMap.get("genre"))
-                .releaseDate(LocalDate.parse((String)movieMap.get("repRlsDate"), DateTimeFormatter.BASIC_ISO_DATE))
+                .releaseDate(LocalDate.parse((String) movieMap.get("repRlsDate"), DateTimeFormatter.BASIC_ISO_DATE))
                 .plot((String) plotMap.get("plotText"))
                 .nation((String) movieMap.get("nation"))
-                .runtime(Long.parseLong((String)movieMap.get("runtime")))
+                .runtime(Long.parseLong((String) movieMap.get("runtime")))
                 .rating((String) movieMap.get("rating"))
                 .poster(posterLink)
                 .thumbnail(thumbnail)
