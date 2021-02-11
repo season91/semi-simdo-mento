@@ -15,8 +15,10 @@ import simdo.infra.config.AppProperties;
 import simdo.infra.mail.EmailMessage;
 import simdo.infra.mail.EmailService;
 import simdo.module.member.form.SignUpForm;
+import simdo.module.member.form.UpdateForm;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -123,5 +125,28 @@ public class MemberService implements UserDetailsService{
 
     public void quit(Member memberToQuit) {
         memberRepository.deleteById(memberToQuit.getId());
+    }
+
+    public void updateInfo(Member memberToUpdate, @Valid UpdateForm updateForm) {
+        if (updateForm.getName() != "") {
+            memberToUpdate.setName(updateForm.getName());
+        }
+
+        if (updateForm.getPassword() != "") {
+            updatePassword(memberToUpdate, memberToUpdate.getPassword());
+        }
+
+        if (updateForm.getPhone() != "") {
+            memberToUpdate.setPhone(updateForm.getPhone());
+        }
+
+        if (updateForm.getGender() != "") {
+            memberToUpdate.setGender(updateForm.getGender());
+        }
+
+        if (updateForm.getBirthday() != "") {
+            LocalDate parsedBirthday = LocalDate.parse(updateForm.getBirthday());
+            memberToUpdate.setBirthday(parsedBirthday);
+        }
     }
 }

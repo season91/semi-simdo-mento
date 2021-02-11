@@ -1,6 +1,7 @@
 package simdo.module.member;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -43,14 +44,9 @@ public class Member {
 
     private LocalDateTime joinedAt;
 
-    private String bio;
-
     @Lob
     @Basic(fetch = FetchType.EAGER)
     private String profileImage;
-
-    @Column(nullable = false)
-    private int isLeave;
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

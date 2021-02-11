@@ -4,14 +4,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import simdo.module.member.form.SignUpForm;
+import simdo.module.member.form.UpdateForm;
 import simdo.module.member.validator.SignUpFormValidator;
+import simdo.module.member.validator.UpdateFormValidator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,10 +28,16 @@ public class MemberController {
     private final MemberService memberService;
     private final SignUpFormValidator signUpFormValidator;
     private final MemberRepository memberRepository;
+    private final UpdateFormValidator updateFormValidator;
 
     @InitBinder("signUpForm")
     public void InitBinder(WebDataBinder dataBinder) {
         dataBinder.addValidators(signUpFormValidator);
+    }
+
+    @InitBinder("updateForm")
+    public void UpdateFormInitBinder(WebDataBinder dataBinder) {
+        dataBinder.addValidators(updateFormValidator);
     }
 
 
@@ -33,7 +46,6 @@ public class MemberController {
         model.addAttribute("signUpForm", new SignUpForm());
         return "member/sign-up";
     }
-
 
     @PostMapping(value = "/sign-up")
     public String signUp(@Valid SignUpForm signUpForm, Errors errors) {
@@ -87,6 +99,7 @@ public class MemberController {
     public String viewProfile(@PathVariable String email, Model model, @CurrentMember Member member) {
         Member memberToView = memberService.getAccount(email);
         model.addAttribute(memberToView);
+        model.addAttribute("updateForm", new UpdateForm());
         model.addAttribute("memberToView", memberToView); /*조민희코드추가*/
         model.addAttribute("isOwner", memberToView.equals(member));
         return "member/profile";
@@ -128,13 +141,26 @@ public class MemberController {
     }
 
     @PostMapping("/quit/{email}")
-    public String memberQuit(@PathVariable String email, Model model) {
+    public void memberQuit(@PathVariable String email, Model model, HttpServletResponse response) throws IOException {
         Member memberToQuit = memberService.getAccount(email);
         model.addAttribute(memberToQuit);
         model.addAttribute("memberToView", memberToQuit);
         memberService.quit(memberToQuit);
         SecurityContextHolder.clearContext();
 
-        return "redirect:/";
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='/';</script>");
+        out.flush();
+    }
+
+    @PostMapping("/update-info/{email}")
+    public String memberUpdate(@PathVariable String email, Model model, @Valid UpdateForm updateForm, Errors errors) {
+        Member memberToUpdate = memberService.getAccount(email);
+        model.addAttribute(memberToUpdate);
+        model.addAttribute("member", memberToUpdate);
+        memberService.updateInfo(memberToUpdate, updateForm);
+
+        return "index-after-login";
     }
 }

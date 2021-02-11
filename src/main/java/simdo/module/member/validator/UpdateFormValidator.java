@@ -13,7 +13,6 @@ public class UpdateFormValidator implements Validator {
 
     private final MemberRepository memberRepository;
 
-
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz.isAssignableFrom(UpdateForm.class);
@@ -22,5 +21,9 @@ public class UpdateFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         UpdateForm updateForm = (UpdateForm) target;
+
+        if (memberRepository.existsByName(updateForm.getName())){
+            errors.rejectValue("name","invalid.name",new Object[]{updateForm.getName()},"이미 사용중인 이름입니다.");
+        }
     }
 }
