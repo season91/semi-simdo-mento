@@ -6,11 +6,20 @@
 <nav th:replace="layouts/fragments.html::main-nav"></nav>
 
 <!--CONTENTS-->
-<contents>
-    <div th:each="movie : ${movie}">
-        <img th:src="${movie.poster}">
-        <span th:text="${movie.mvTitle}"></span>
-        <a th:href="@{/movie/detail(mvno=${movie.mvNo})}">더보기</a>
+<contents style="display: flex; justify-content: space-evenly; padding: 10vh;">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="movie : ${movie}">
+            <div class="card h-100">
+                <img th:src="${movie.poster}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${movie.mvTitle}"></h5>
+                    <p class="card-text" th:text="${movie.plot}">
+                </div>
+                <div class="card-footer">
+                    <a class="text-muted" th:href="@{/movie/detail(mvno=${movie.mvNo})}">read more</a>
+                </div>
+            </div>
+        </div>
     </div>
 </contents>
 

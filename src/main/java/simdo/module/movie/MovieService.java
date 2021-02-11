@@ -27,20 +27,23 @@ public class MovieService {
     private final MovieRepository movieRepository;
 
     // 영화 기본 정보 가지고 올 영화 API
-    public Map<String, Object> kmdbAPI() {
+    public Map<String, Object> kmdbAPI(String title) {
         HttpUtil util = new HttpUtil();
         ObjectMapper om = new ObjectMapper();
         String SERVICE_KEY = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?ServiceKey=RLYJPR31F2X100MT6HX3&query=";
 
 
         // 쿼리문 변경해가면서 h2에 데이터 넣자!
-        //1. 아이엠히어
-        String url = SERVICE_KEY + "알랭샤바&actor=배두나&detail=Y&collection=kmdb_new2&listCount=1";
+        String url = "";
+        switch (title){
+            //1. 아이엠히어
+            case "아이엠히어" :  url = SERVICE_KEY + "알랭샤바&actor=배두나&detail=Y&collection=kmdb_new2&listCount=1"; break;
+            //2. 라라랜드
+            case "라라랜드" : url = SERVICE_KEY+ "엠마&actor=라이언고슬링&detail=Y&collection=kmdb_new2&listCount=1"; break;
+            default: break;
+        }
 
-        //2. 라라랜드
-        //String url = SERVICE_KEY+ "엠마&actor=라이언고슬링&detail=Y&collection=kmdb_new2&listCount=1";
-
-        String json = util.get(url);
+       String json = util.get(url);
 
         Map resultMap = null;
         try {
@@ -63,25 +66,22 @@ public class MovieService {
     }
 
     // 영화 썸네일 가지고 올 네이버영화 API
-    public String naverMovieAPI() {
+    public String naverMovieAPI(String title) {
         HttpUtil util = new HttpUtil();
         String clientId = "1TOE19GYAcgawcD0ESm1";
         String clientSecret = "tmgwvMjtQF";
         ObjectMapper om = new ObjectMapper();
-        String title = null;
+        String titleEncoder = null;
 
         try {
-            //1. 아이엠히어
-            title = URLEncoder.encode("아이엠히어", "UTF-8");
 
-            //2. 라라랜드
-            //title = URLEncoder.encode("라라랜드", "UTF-8");
+            titleEncoder = URLEncoder.encode(title, "UTF-8");
 
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패", e);
         }
 
-        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + title + "&yearfrom=2015&yearto=2019"; // json 결과
+        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + titleEncoder + "&yearfrom=2009&yearto=2019"; // json 결과
 
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
