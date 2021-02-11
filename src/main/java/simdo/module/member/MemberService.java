@@ -88,7 +88,7 @@ public class MemberService implements UserDetailsService{
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 new UserAccount(member),
                 member.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                List.of(new SimpleGrantedAuthority("ROLE_MEMBER")));
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 

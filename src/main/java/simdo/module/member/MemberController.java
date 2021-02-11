@@ -128,7 +128,7 @@ public class MemberController {
     }
 
     @PostMapping("/quit/{email}")
-    public String memberQuit(@PathVariable String email, Model model, @CurrentMember Member member) {
+    public String memberQuit(@PathVariable String email, Model model) {
         Member memberToQuit = memberService.getAccount(email);
         model.addAttribute(memberToQuit);
         model.addAttribute("memberToView", memberToQuit);

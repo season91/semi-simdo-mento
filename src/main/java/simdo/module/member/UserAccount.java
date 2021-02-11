@@ -12,7 +12,7 @@ public class UserAccount extends User {
     private Member member;
 
     public UserAccount(Member member) {
-        super(member.getEmail(), member.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        super(member.getEmail(), member.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_MEMBER")));
         this.member = member;
     }
 }
