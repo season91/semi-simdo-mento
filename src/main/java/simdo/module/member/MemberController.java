@@ -163,7 +163,23 @@ public class MemberController {
     }
 
     @GetMapping("/find-password")
-    public String findPassword(){
+    public String findPassword() {
         return "member/find-password";
+    }
+
+    @PostMapping("/find-password")
+    public String sendTempPassword(@RequestParam(value = "email") String email, Model model, HttpServletResponse response) throws IOException {
+        try{
+            Member memberToFindPassword = memberService.getAccount(email);
+            model.addAttribute(memberToFindPassword);
+            memberService.sendTempPasswordEmail(memberToFindPassword);
+            return "redirect:/login";
+        } catch (IllegalArgumentException e){
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('가입되지 않은 이메일입니다.'); location.href='/';</script>");
+            out.flush();
+            return "redirect:/";
+        }
     }
 }
