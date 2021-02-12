@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 
 @Controller
 @RequiredArgsConstructor
@@ -162,5 +160,10 @@ public class MemberController {
         memberService.updateInfo(memberToUpdate, updateForm);
 
         return "index-after-login";
+    }
+
+    @GetMapping("/find-password")
+    public String findPassword(){
+        return "member/find-password";
     }
 }
