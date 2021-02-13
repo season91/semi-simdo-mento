@@ -34,7 +34,7 @@ public class MemberController {
     }
 
     @InitBinder("updateForm")
-    public void UpdateFormInitBinder(WebDataBinder dataBinder) {
+    public void updateBinder(WebDataBinder dataBinder) {
         dataBinder.addValidators(updateFormValidator);
     }
 
@@ -45,15 +45,6 @@ public class MemberController {
         return "member/sign-up";
     }
 
-    @PostMapping(value = "/sign-up")
-    public String signUp(@Valid SignUpForm signUpForm, Errors errors) {
-        if (errors.hasFieldErrors("name")) {
-            return "member/sign-up";
-        }
-        Member member = memberService.processNewMember(signUpForm);
-        memberService.login(member);
-        return "redirect:/";
-    }
 
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token, String email, Model model) {
@@ -90,6 +81,18 @@ public class MemberController {
         }
 
         memberService.sendSignUpConfirmEmail(member);
+        return "redirect:/";
+    }
+
+
+    @PostMapping(value = "/sign-up")
+    public String signUp(@Valid SignUpForm signUpForm, Errors errors) {
+        System.out.println("회원가입시"+errors.hasFieldErrors("name"));
+        if (errors.hasFieldErrors("name")) {
+            return "member/sign-up";
+        }
+        Member member = memberService.processNewMember(signUpForm);
+        memberService.login(member);
         return "redirect:/";
     }
 
@@ -162,8 +165,9 @@ public class MemberController {
         return "index-after-login";
     }
 
-    @GetMapping("/find-password")
+    @GetMapping(value = "/find-password")
     public String findPassword(){
+
         return "member/find-password";
     }
 }

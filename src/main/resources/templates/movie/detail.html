@@ -23,8 +23,8 @@
                         <a class="btn btn-secondary">후기 작성</a>
                         <a class="btn btn-info">명대사 작성</a>
                         <!-- authentication.name 이메일정보로 로그인유저 이메일정보와 영화번호를 넘겨 위시리스트에 추가한다. -->
-                        <a th:if="${wish == null}" th:href="@{'/movie/wishadd/' + ${#authentication.name}(mvno=${movie.mvNo})}" class="btn btn-danger">찜하기!</a>
-                        <a th:if="${wish}" th:href="@{/movie/wishdel(wishno=${wish.wishNo})}" class="btn btn-outline-danger">찜해제!</a>
+                        <a th:if="${wish == null}" th:href="@{'/movie/wishadd/' + ${#authentication.name}(mvno=${movie.mvNo})}" class="btn btn-danger wish">찜하기!</a>
+                        <a th:if="${wish}" th:href="@{/movie/wishdel(wishno=${wish.wishNo})}" class="btn btn-outline-danger wish">찜해제!</a>
                     </p>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import simdo.module.member.Member;
 import simdo.module.member.MemberService;
@@ -92,4 +93,18 @@ public class MovieController {
         return "index";
     }
 
+    // 번역테스트
+    @GetMapping(value = "/test")
+    public String test(){
+        return "movie/test";
+    }
+
+    // 번역테스트
+    @PostMapping(value = "/translation")
+    public String translation(String text){
+        System.out.println("오나??");
+        String res = movieService.papagoAPI(text);
+        System.out.println(res);
+        return res;
+    }
 }

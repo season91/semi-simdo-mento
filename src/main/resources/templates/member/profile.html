@@ -23,7 +23,7 @@
             <div class="form-group row">
                 <label for="nickname" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nickname" aria-describedby="nicknameHelp" minlength="2" maxlength="8" th:placeholder="${memberToView.getName()}" th:field="*{name}">
+                    <input type="text" class="form-control" id="nickname" aria-describedby="nicknameHelp" required minlength="2" maxlength="8" th:placeholder="${memberToView.getName()}" th:field="*{name}">
                     <small id="nicknameHelp" class="form-text text-muted">이름을 공백없이 문자와 숫자로만 2자 이상 8자 이내로 입력하세요.</small>
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</small>
                 </div>

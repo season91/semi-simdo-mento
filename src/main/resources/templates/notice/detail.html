@@ -13,6 +13,7 @@
             <h5 th:text="${notice.title}" class="card-title"></h5>
             <p th:text="${notice.content}" class="card-text"></p>
         </div>
+        <div><a th:href="@{/notice/edit(noticeno=${notice.id})}">수정</a><a th:href="@{/notice/delete(noticeno=${notice.id})}">삭제</a></div>
     </div>
 </contents>
 <footer th:replace="layouts/fragments.html::footer"></footer>
