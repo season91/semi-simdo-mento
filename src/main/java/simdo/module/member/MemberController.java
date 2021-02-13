@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -153,17 +154,43 @@ public class MemberController {
     }
 
     @PostMapping("/update-info/{email}")
-    public String memberUpdate(@PathVariable String email, Model model, @Valid UpdateForm updateForm, Errors errors) {
-        Member memberToUpdate = memberService.getAccount(email);
-        model.addAttribute(memberToUpdate);
-        model.addAttribute("member", memberToUpdate);
-        memberService.updateInfo(memberToUpdate, updateForm);
+    public void memberUpdate(@PathVariable String email, Model model, @Valid UpdateForm updateForm, BindingResult result, HttpServletResponse response) throws IOException {
+        if (result.hasErrors()) {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('[정보 변경 실패] 이름을 공백없이 문자와 숫자로만 2자 이상 8자 이내로 입력하셔야 합니다.'); location.href='/';</script>");
+            out.flush();
+        } else {
+            Member memberToUpdate = memberService.getAccount(email);
+            model.addAttribute(memberToUpdate);
+            model.addAttribute("member", memberToUpdate);
+            memberService.updateInfo(memberToUpdate, updateForm);
 
-        return "index-after-login";
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('[정보 변경 성공] 정보 변경이 완료되었습니다.'); location.href='/';</script>");
+            out.flush();
+        }
     }
 
     @GetMapping("/find-password")
     public String findPassword(){
         return "member/find-password";
+    }
+
+    @PostMapping("/find-password")
+    public String sendTempPassword(@RequestParam(value = "email") String email, Model model, HttpServletResponse response) throws IOException {
+        try{
+            Member memberToFindPassword = memberService.getAccount(email);
+            model.addAttribute(memberToFindPassword);
+            memberService.sendTempPasswordEmail(memberToFindPassword);
+            return "redirect:/login";
+        } catch (IllegalArgumentException e){
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('가입되지 않은 이메일입니다.'); location.href='/';</script>");
+            out.flush();
+            return "redirect:/";
+        }
     }
 }

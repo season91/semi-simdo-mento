@@ -133,15 +133,15 @@ public class MemberService implements UserDetailsService{
             memberToUpdate.setName(updateForm.getName());
         }
 
-        if (updateForm.getPassword() != null) {
-            updatePassword(memberToUpdate, memberToUpdate.getPassword());
+        if (updateForm.getPassword() != null && updateForm.getPassword() != "") {
+            updatePassword(memberToUpdate, updateForm.getPassword());
         }
 
         if (updateForm.getPhone() != "") {
             memberToUpdate.setPhone(updateForm.getPhone());
         }
 
-        if (updateForm.getGender() != "") {
+        if (updateForm.getGender() != null) {
             memberToUpdate.setGender(updateForm.getGender());
         }
 
