@@ -28,7 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests()
                 .mvcMatchers("/", "/login", "/member/sign-up", "/member/check-email-token", "/member/email-login", "/member/login-by-email", "/member/find-password").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and().csrf().ignoringAntMatchers("/movie/translation");
+                // 번역 API 비동기통신을 위해 특정 url만 csrf 비활성화하였다. 이렇게 해도 괜찮은지 멘토님께 문의 (아영)
 
         httpSecurity.formLogin()
                 .loginPage("/login").permitAll();
@@ -39,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.rememberMe()
                 .userDetailsService(userDetailsService)
                 .tokenRepository(tokenRepository());
+
     }
 
     @Bean

@@ -114,7 +114,7 @@ public class MovieService {
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
         String text;
         String body;
-        String lan = "ja";
+        String lan = "en";
         try {
             text = URLEncoder.encode(paramText, "UTF-8");
             body = "source=ko&target="+lan+"&text=" + text;

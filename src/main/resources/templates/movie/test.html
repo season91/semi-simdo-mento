@@ -1,7 +1,5 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<meta name="_csrf" th:content="${_csrf.token}">
-<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head th:replace="layouts/fragments.html::head">
 </head>
 <body>
@@ -11,49 +9,14 @@
 <h2>번역테스트</h2>
 <h3>번역전</h3>
 <input type="text" name="fms" id="fms">
-<button onclick="translation()">전송</button>
+<p class="send">전송</p>
 
 <h3>번역후</h3>
-<div class="trans">번역된값:</div>
-
+<div class="trans"></div>
+<div th:if="${res}" th:text="${res}"></div>
 <footer th:replace="layouts/fragments.html::footer"></footer>
 
-<script>
-    let translation = () =>{
-        /*명대사값만 가져오기 text에*/
-        let text = fms.value;
-        console.dir(text);
-        let transDiv = document.querySelector('.trans');
-        let url ="/movie/translation";
-        let headerObj = new Headers();
-        headerObj.append('Content-Type',"application/x-www-form-urlencoded");
-        if(text){
-            fetch(url,{
-                method:"POST",
-                headers : headerObj,
-                body : "text="+text
-            }).then(response=>{
-                if(response.ok){
-                    console.dir(response.ok);
-                    return response.text();
-                }
-                console.dir(response);
-            })
-                .then((msg)=>{
-
-                    if(msg == 'fail'){
-                        transDiv.innerHTML = '번역할 수 없습니다.';
-                    } else {
-                        transDiv.innerHTML = msg;
-                    }
-                }).catch(error=>{
-                error.alertMessage();
-            })
-        } else {
-            alert("입력하지 않았습니다.");
-        }
-    }
-
+<script src="/js/papago.js">
 </script>
 </body>
 
