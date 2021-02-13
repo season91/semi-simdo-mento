@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/fragments.html::head">
+</head>
+<body>
+<nav th:replace="layouts/fragments.html::main-nav"></nav>
+
+<!--CONTENTS-->
+<contents>
+    <c:choose>
+        <c:when test="${!empty requestScope.wishList}">
+            <c:forEach var="wish" items="${requestScope.wishList}" varStatus="status">
+
+                <div class="content_all">
+                    <div class="mywish">
+                        <img class="wishposter" id="wsPoster" src="${wish.poster}">
+                    </div>
+                    <div class="content_detail">
+                        <div class="mvDate">
+                            <div>찜한 날짜 ${wish.wishRegDate}</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviewBox-bottom-wrapper">
+                    <a onclick="wishDel(${empty wish})">찜 해제<i class="far fa-trash-alt"></i></a>
+                </div>
+
+            </c:forEach>
+        </c:when>
+
+
+        <c:otherwise>
+            <div class="denay_wish">
+                아직 등록하신 찜목록이 없습니다.<br>
+                감명깊은영화 또는 보고 싶은 영화를 찜설정해주세요!
+            </div>
+
+        </c:otherwise>
+    </c:choose>
+
+
+
+
+
+</contents>
+
+<footer th:replace="layouts/fragments.html::footer"></footer>
+</body>
+
+<script>
+</script>
+</html>

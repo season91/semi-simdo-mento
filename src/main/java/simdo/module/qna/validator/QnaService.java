@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import simdo.module.notice.Notice;
@@ -12,7 +13,6 @@ import simdo.module.qna.form.QnaForm;
 
 
 import javax.transaction.Transactional;
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 
 /**
@@ -47,4 +47,6 @@ public class QnaService {
         Qna qna = qnaRepository.findQnaById(id);
         return qna;
     }
+
+
 }
