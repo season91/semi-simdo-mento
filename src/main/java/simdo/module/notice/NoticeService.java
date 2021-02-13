@@ -64,6 +64,5 @@ public class NoticeService {
         noticeRepository.deleteById(noticeNo);
     }
 
-    // 공지사항 수정
 
 }

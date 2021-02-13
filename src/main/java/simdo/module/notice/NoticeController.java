@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import simdo.module.member.Member;
 import simdo.module.notice.form.NoticeEditForm;
 import simdo.module.notice.form.NoticeForm;
@@ -32,26 +33,6 @@ public class NoticeController {
         model.addAttribute("noticeForm", new NoticeForm());
         return "notice/write";
     }
-
-
-    // 공지사항 수정 작성할 폼
-    @GetMapping(value = "/edit")
-    public String noticeEdit(Model model, Long noticeno){
-        Notice notice = noticeService.findNoticeById(noticeno);
-        model.addAttribute("notice",notice);
-        model.addAttribute("noticeEditForm",new NoticeEditForm());
-        return "notice/edit";
-    }
-
-    // 공지사항 수정 후 DB 저장 후 수정내용 화면에 보여주기.
-    @PostMapping(value = "/edit")
-    public String noticeEditFormSave(Model model, NoticeEditForm noticeEditForm, Long noticeno){
-        Notice notice = noticeService.findNoticeById(noticeno);
-        Notice noticeEdit = noticeService.saveNoticeEdit(notice, noticeEditForm);
-        model.addAttribute("notice",noticeEdit);
-        return "redirect:/notice/detail?noticeno="+noticeno;
-    }
-
 
     // 공지사항 작성 후 DB에 저장 후 공지사항 메인화면으로 이동.
     @PostMapping(value = "/write")
@@ -76,6 +57,27 @@ public class NoticeController {
         return "notice/detail";
     }
 
+
+    // 공지사항 수정 작성할 폼
+    @GetMapping(value = "/edit")
+    public String noticeEdit(Model model, Long noticeno){
+        Notice notice = noticeService.findNoticeById(noticeno);
+        model.addAttribute("notice",notice);
+        model.addAttribute("noticeEditForm",new NoticeEditForm());
+        return "notice/edit";
+    }
+
+    // 공지사항 수정 후 DB 저장 후 수정내용 화면에 보여주기.
+    @PostMapping(value = "/edit")
+    public String noticeEditFormSave(Model model, NoticeEditForm noticeEditForm, Long noticeno, RedirectAttributes redirectAttributes){
+        Notice notice = noticeService.findNoticeById(noticeno);
+        Notice noticeEdit = noticeService.saveNoticeEdit(notice, noticeEditForm);
+        model.addAttribute("notice",noticeEdit);
+        redirectAttributes.addAttribute("noticeno",noticeno);
+        return "redirect:/notice/detail";
+    }
+
+    
     // 공지사항 번호 기준으로 삭제하기
     @GetMapping(value = "/delete")
     public String noticeDelete(Long noticeno){

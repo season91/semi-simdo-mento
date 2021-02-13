@@ -34,7 +34,7 @@ public class MemberController {
     }
 
     @InitBinder("updateForm")
-    public void updateBinder(WebDataBinder dataBinder) {
+    public void UpdateFormInitBinder(WebDataBinder dataBinder) {
         dataBinder.addValidators(updateFormValidator);
     }
 
@@ -45,6 +45,16 @@ public class MemberController {
         return "member/sign-up";
     }
 
+
+    @PostMapping(value = "/sign-up")
+    public String signUp(@Valid SignUpForm signUpForm, Errors errors) {
+        if (errors.hasFieldErrors("name")) {
+            return "member/sign-up";
+        }
+        Member member = memberService.processNewMember(signUpForm);
+        memberService.login(member);
+        return "redirect:/";
+    }
 
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token, String email, Model model) {
@@ -84,17 +94,6 @@ public class MemberController {
         return "redirect:/";
     }
 
-
-    @PostMapping(value = "/sign-up")
-    public String signUp(@Valid SignUpForm signUpForm, Errors errors) {
-        System.out.println("회원가입시"+errors.hasFieldErrors("name"));
-        if (errors.hasFieldErrors("name")) {
-            return "member/sign-up";
-        }
-        Member member = memberService.processNewMember(signUpForm);
-        memberService.login(member);
-        return "redirect:/";
-    }
 
     @GetMapping("/profile/{email}")
     public String viewProfile(@PathVariable String email, Model model, @CurrentMember Member member) {
