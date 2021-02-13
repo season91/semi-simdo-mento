@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Getter
 public class QnaForm {
+
     @NotBlank
     private String subject;
 
