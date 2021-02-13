@@ -154,7 +154,7 @@ public class MemberController {
     }
 
     @PostMapping("/update-info/{email}")
-    public void memberUpdate(@PathVariable String email, Model model, @Valid UpdateForm updateForm, BindingResult result, HttpServletResponse response) throws IOException {
+    public void memberUpdate(@PathVariable String email, Model model, @Valid UpdateForm updateForm, Errors errors, BindingResult result, HttpServletResponse response) throws IOException {
         if (result.hasErrors()) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
