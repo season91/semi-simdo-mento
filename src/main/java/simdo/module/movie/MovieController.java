@@ -3,10 +3,8 @@ package simdo.module.movie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import simdo.module.member.Member;
 import simdo.module.member.MemberService;
 import simdo.module.wish.Wish;
@@ -101,10 +99,10 @@ public class MovieController {
 
     // 번역테스트
     @PostMapping(value = "/translation")
-    public String translation(String text){
-        System.out.println("오나??");
+    @ResponseBody
+    public String translation(String text,Model model){
         String res = movieService.papagoAPI(text);
-        System.out.println(res);
+        model.addAttribute("res",res);
         return res;
     }
 }
