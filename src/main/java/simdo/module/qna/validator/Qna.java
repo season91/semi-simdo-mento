@@ -17,34 +17,42 @@ import static javax.persistence.FetchType.LAZY;
 @Builder
 @EqualsAndHashCode(of = "id")
 @Table(name = "COMM")
+/**
+ * @author backkwan
+ */
 public class Qna {
     @Id
     @GeneratedValue
     @Column(name = "QSTN_NO")
-    private Long qstnNo;
+    private Long id;
 
     @Column(name = "QSTN_TITLE")
-    private String qstnTitle;
+    private String title;
 
     @Column(name = "QSTN_CONTENT")
-    private String qstnContent;
+    private String content;
 
     @Column(name = "QSTN_REG_DATE")
     private LocalDateTime createdAt;
 
     @Column(name = "QSTN_TYPE")
-    private String qstnType;
+    private String type;
 
     @Column(name = "ATTACHEDFILE")
-    private String attachedfile;
+    private String file;
 
     @Column(name = "QSTN_COMENT")
-    private String qstncoment;
+    private String coment;
 
     @Column(name = "USER_NM")
-    private String userNm;
+    private String nm;
 
-    @ManyToOne(fetch = LAZY)
+
     @JoinColumn(name = "user_no")
+    private long userNo;
+
+    @OneToOne(fetch = FetchType.LAZY)
     private Member member;
+
+
 }

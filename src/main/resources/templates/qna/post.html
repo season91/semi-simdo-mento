@@ -1,0 +1,50 @@
+
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/fragments.html::head">
+</head>
+
+/**
+* @author backkwan
+* qna를 작성하는 화면 (write)
+*/
+<body>
+<nav th:replace="layouts/fragments.html::main-nav"></nav>
+<!--CONTENTS-->
+<contents>
+    <div class="container">
+        <form th:action="@{/qna/post}" th:object="${qnaForm}" method="post">
+
+                <label for="inputTitle" class=" post-subject"><strong>제목</strong></label>
+                <div class="qna-title">
+                    <input th:field="*{subject}" type="text" id="inputTitle">
+                </div>
+
+                <label for="inputContent" class="post-content"><strong>내용</strong></label>
+                <div class="qna-content">
+                    <textarea th:field="*{content} "type="text" name="content" id="inputContent"></textarea>
+                </div>
+
+
+
+                <div class="col-auto">
+                    <input class="btn btn-primary" type="submit" role="button" value="글쓰기">
+                </div>
+
+        </form>
+    </div>
+
+
+
+
+
+
+</contents>
+
+<footer th:replace="layouts/fragments.html::footer"></footer>
+</body>
+
+<script>
+</script>
+</html>

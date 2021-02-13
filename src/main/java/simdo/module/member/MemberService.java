@@ -20,6 +20,7 @@ import simdo.module.member.form.UpdateForm;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -132,7 +133,7 @@ public class MemberService implements UserDetailsService{
             memberToUpdate.setName(updateForm.getName());
         }
 
-        if (updateForm.getPassword() != "") {
+        if (updateForm.getPassword() != null) {
             updatePassword(memberToUpdate, memberToUpdate.getPassword());
         }
 
@@ -148,5 +149,26 @@ public class MemberService implements UserDetailsService{
             LocalDate parsedBirthday = LocalDate.parse(updateForm.getBirthday());
             memberToUpdate.setBirthday(parsedBirthday);
         }
+    }
+
+    public void sendTempPasswordEmail(Member memberToFindPassword) {
+        String tempPassword = UUID.randomUUID().toString();
+        tempPassword = tempPassword.replaceAll("-", "");
+        tempPassword = tempPassword.substring(0, 12);
+        updatePassword(memberToFindPassword, tempPassword);
+
+        Context context = new Context();
+        context.setVariable("name", memberToFindPassword.getName());
+        context.setVariable("tempPassword", tempPassword);
+        context.setVariable("message", "아래의 임시 비밀번호로 로그인 후 비밀번호를 변경해주세요.");
+        String message = templateEngine.process("mail/temp-password", context);
+
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(memberToFindPassword.getEmail())
+                .subject("심도, 임시 비밀번호 발급")
+                .message(message)
+                .build();
+
+        emailService.sendEmail(emailMessage);
     }
 }

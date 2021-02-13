@@ -45,7 +45,6 @@ public class MemberController {
         return "member/sign-up";
     }
 
-
     @PostMapping(value = "/sign-up")
     public String signUp(@Valid SignUpForm signUpForm, Errors errors) {
         if (errors.hasFieldErrors("name")) {
@@ -93,7 +92,6 @@ public class MemberController {
         memberService.sendSignUpConfirmEmail(member);
         return "redirect:/";
     }
-
 
     @GetMapping("/profile/{email}")
     public String viewProfile(@PathVariable String email, Model model, @CurrentMember Member member) {
@@ -164,9 +162,8 @@ public class MemberController {
         return "index-after-login";
     }
 
-    @GetMapping(value = "/find-password")
+    @GetMapping("/find-password")
     public String findPassword(){
-
         return "member/find-password";
     }
 }

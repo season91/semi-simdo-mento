@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Builder
 @EqualsAndHashCode(of = "id")
 @Table(name = "USER_WISHMV")
+/**
+ * @author backkwan
+ */
 public class Wish {
 
     @Id
