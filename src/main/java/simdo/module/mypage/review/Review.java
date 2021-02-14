@@ -1,6 +1,7 @@
-package simdo.module.review;
+package simdo.module.mypage.review;
 
 import lombok.*;
+import simdo.module.mypage.BaseTimeEntity;
 
 
 import javax.persistence.*;
@@ -10,10 +11,10 @@ import javax.persistence.*;
  * @author jonghwan
  */
 @Getter
-//@Setter
-//@AllArgsConstructor
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
-//@Builder
+@Builder
 @Entity
 @Table(name = "USER_REVIEW")
 public class Review extends BaseTimeEntity {
@@ -28,8 +29,10 @@ public class Review extends BaseTimeEntity {
 
     private double score;
 
+    @Column(length = 500, nullable = false)
     private String rvContent;
 
+    @Column(nullable = false)
     private String watchDate;
 
     @Column(nullable = false)
@@ -40,17 +43,6 @@ public class Review extends BaseTimeEntity {
     @Column(nullable = false)
     private String thumbnail;
 
-    @Builder
-    public Review(Long userNo, double score, String rvContent, String watchDate, String mvNo,
-                  String mvTitle, String thumbnail){
-        this.userNo = userNo;
-        this.score = score;
-        this.rvContent = rvContent;
-        this.watchDate = watchDate;
-        this.mvNo = mvNo;
-        this.mvTitle = mvTitle;
-        this.thumbnail = thumbnail;
-    }
 
 
 }

@@ -1,4 +1,4 @@
-package simdo.module.review;
+package simdo.module.mypage;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
