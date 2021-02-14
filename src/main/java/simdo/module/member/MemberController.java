@@ -158,7 +158,7 @@ public class MemberController {
         if (result.hasErrors()) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('[정보 변경 실패] 이름을 공백없이 문자와 숫자로만 2자 이상 8자 이내로 입력하셔야 합니다.'); location.href='/';</script>");
+            out.println("<script>alert('[정보 변경 실패] 이름을 공백없이 문자와 숫자로만 2자 이상 8자 이내로 입력하셔야 합니다.'); history.back();</script>");
             out.flush();
         } else {
             Member memberToUpdate = memberService.getAccount(email);
@@ -168,7 +168,7 @@ public class MemberController {
 
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('[정보 변경 성공] 정보 변경이 완료되었습니다.'); location.href='/';</script>");
+            out.println("<script>alert('정보 변경이 완료되었습니다.'); location.href='/';</script>");
             out.flush();
         }
     }
