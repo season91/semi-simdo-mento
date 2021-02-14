@@ -21,12 +21,12 @@
                     </tr>
                 </thead>
                 <tbody>  //바디부분
-                <tr class="text-center" th:each="qna : ${qnaList}">
+                <tr class="text-center" th:each="qna : ${qna}">
                     <th scope="row">
                         <span th:text="${qna.id}"></span>
                     </th>
                     <td>
-                        <a th:href="@{/qna/list(qstnnN=${qna.id})}">
+                        <a th:href="@{/qna/qnadetail(qstnnN=${qna.id})}">
                             <span th:text="${qna.title}"></span>
                         </a>
                     </td>
@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         <div class="write-row">
-            <a th:href="@{qna/post}">Q&A 등록</a>
+            <a th:href="@{/qna/post}">Q&A 등록</a>
         </div>
 
     </div>

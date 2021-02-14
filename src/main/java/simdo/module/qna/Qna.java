@@ -1,4 +1,4 @@
-package simdo.module.qna.validator;
+package simdo.module.qna;
 
 
 import lombok.*;
@@ -51,7 +51,7 @@ public class Qna {
     @JoinColumn(name = "user_no")
     private long userNo;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
 

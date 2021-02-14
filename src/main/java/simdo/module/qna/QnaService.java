@@ -1,14 +1,11 @@
-package simdo.module.qna.validator;
+package simdo.module.qna;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import simdo.module.notice.Notice;
 import simdo.module.qna.form.QnaForm;
 
 
@@ -27,10 +24,6 @@ public class QnaService {
     private QnaRepository qnaRepository;
 
 
-    public Qna findQnaByid(long id){
-
-        return qnaRepository.findById(id).orElse(new Qna());
-    }
 
 
     public Qna saveQna(QnaForm qnaForm) {
@@ -43,10 +36,14 @@ public class QnaService {
         return qna;
     }
 
-    public Qna qnaDetail(Long id) {
-        Qna qna = qnaRepository.findQnaById(id);
+    public Qna qnaDetail(Long QSTNNO) {
+        Qna qna = qnaRepository.findQnaById(QSTNNO);
         return qna;
     }
 
 
+    public Page<Qna> getQnaList(Pageable pageable) {
+        return qnaRepository.findAll(pageable);
+    }
 }
+

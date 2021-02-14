@@ -8,6 +8,8 @@ import simdo.module.movie.Movie;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
+
 /**
  * @author backkwan
  */
@@ -17,6 +19,9 @@ import java.time.LocalDate;
 public class WishService {
 
     private final WishRepository wishRepository;
+    public Wish getWishList;
+
+
     /**
      * @author choayoung
      */
@@ -42,4 +47,6 @@ public class WishService {
     public void wishDel(Long wishNo){
         wishRepository.deleteByWishNo(wishNo);
     }
+
+
 }

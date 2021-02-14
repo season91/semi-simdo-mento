@@ -1,9 +1,9 @@
-package simdo.module.qna.validator;
+package simdo.module.qna;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import simdo.module.member.Member;
-
+import simdo.module.qna.Qna;
 
 
 /**

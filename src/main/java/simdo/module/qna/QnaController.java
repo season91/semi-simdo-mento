@@ -1,4 +1,4 @@
-package simdo.module.qna.validator;
+package simdo.module.qna;
 
 
 import lombok.RequiredArgsConstructor;
@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import simdo.module.notice.Notice;
 import simdo.module.qna.form.QnaForm;
 
 /**
@@ -27,33 +25,32 @@ public class QnaController {
    @Autowired
    QnaService qnaService;
 
-   //리스트로가기
-   @GetMapping(value = "")
-   public String qnalist(@RequestParam(value="id",defaultValue = "0")Long id,Model model){
-
-       model.addAttribute("qna",qnaService.findQnaByid(id));
-       return "qna/list";
+   //작성  post
+   @GetMapping(value = "/post")
+   public String postForm(Model model){
+       model.addAttribute("qnaForm", new QnaForm());
+       return "qna/post";
    }
 
 
-
-    //작성post
-    @GetMapping({"/post"})
-    public String qna(@RequestParam(value="id",defaultValue = "0")Long id,
-                                Model model) {
-        model.addAttribute("qna", qnaService.findQnaByid(id));
-        return "qna/post";
-    }
     //db저장
     @PostMapping(value = "/post")
     public String qnaFormSave(QnaForm qnaForm){
         Qna qna = qnaService.saveQna(qnaForm);
-        return "qna/post";
+        return "redirect:/qna/list";
+    }
+
+    //list로 가기
+    @GetMapping(value = "list")
+    public String qna(Model model, @PageableDefault Pageable pageable){
+        Page<Qna> qna = qnaService.getQnaList(pageable);
+        model.addAttribute("qna",qna);
+        return "qna/list";
     }
     //상세보기화면
     @GetMapping(value = "/qnadetail")
-    public String qnaDetail(Model model, Long qstnNo){
-        Qna qna = qnaService.qnaDetail(qstnNo);
+    public String qnaDetail(Model model, Long QSTNNO){
+        Qna qna = qnaService.qnaDetail(QSTNNO);
         model.addAttribute("qna",qna);
         return "qna/qnadetail";
     }
