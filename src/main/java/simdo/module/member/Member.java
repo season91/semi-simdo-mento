@@ -2,10 +2,13 @@ package simdo.module.member;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import simdo.module.qna.Qna;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -66,4 +69,6 @@ public class Member {
         return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
     }
 
+    @OneToMany(mappedBy = "member")
+    private List<Qna> qnaList;
 }
