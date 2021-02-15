@@ -1,7 +1,6 @@
 package simdo.module.member;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import simdo.module.mypage.BaseTimeEntity;
 import simdo.module.qna.Qna;
 
@@ -55,9 +54,9 @@ public class Member extends BaseTimeEntity {
     //@Column(nullable = false)
     private Role role = Role.GUEST;
 
-    @Lob
+    /*@Lob
     @Basic(fetch = FetchType.EAGER)
-    private String profileImage;
+    private String profileImage;*/
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

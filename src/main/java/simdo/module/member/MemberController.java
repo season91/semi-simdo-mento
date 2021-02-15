@@ -102,12 +102,13 @@ public class MemberController {
     public String viewProfile(@PathVariable String email, Model model, HttpServletResponse response) throws IOException {
         SessionMember sessionMember = (SessionMember) httpSession.getAttribute("member");
         if (sessionMember != null) {
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('심도 회원가입 유저만 프로필 기능을 사용하실 수 있습니다.'); history.back();</script>");
-            out.flush();
+            Member memberToView = memberService.getAccount(sessionMember.getEmail());
+            model.addAttribute(memberToView);
+            model.addAttribute("updateForm", new UpdateForm());
+            model.addAttribute("memberToView", memberToView); /*조민희코드추가*/
+            model.addAttribute("isOwner", memberToView.equals(sessionMember));
 
-            return "redirect:/";
+            return "member/profile";
         }else {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             Member member = memberService.getAccount(auth.getName());
@@ -186,14 +187,21 @@ public class MemberController {
     }
 
     @PostMapping("/update-info/{email}")
-    public void memberUpdate(@PathVariable String email, Model model, @Valid UpdateForm updateForm, Errors errors, BindingResult result, HttpServletResponse response) throws IOException {
+    public void memberUpdate(@PathVariable String email, Model model, @Valid UpdateForm updateForm, BindingResult result, HttpServletResponse response) throws IOException {
+        SessionMember sessionMember = (SessionMember) httpSession.getAttribute("member");
+        Member memberToUpdate;
+        if (sessionMember != null) {
+            memberToUpdate = memberService.getAccount(sessionMember.getEmail());
+        }else {
+            memberToUpdate = memberService.getAccount(email);
+        }
+
         if (result.hasErrors()) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('[정보 변경 실패] 이름을 공백없이 문자와 숫자로만 2자 이상 8자 이내로 입력하셔야 합니다.'); history.back();</script>");
             out.flush();
         } else {
-            Member memberToUpdate = memberService.getAccount(email);
             model.addAttribute(memberToUpdate);
             model.addAttribute("member", memberToUpdate);
             memberService.updateInfo(memberToUpdate, updateForm);
