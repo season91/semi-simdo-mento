@@ -47,8 +47,6 @@ public class QnaService {
 
     public List<Qna> getQnaList(@CurrentMember Member member) {
         Member findMember = memberRepository.findByName(member.getName());
-        System.out.println("findMember.getName() = " + findMember.getName());
-
         return findMember.getQnaList();
     }
 }
