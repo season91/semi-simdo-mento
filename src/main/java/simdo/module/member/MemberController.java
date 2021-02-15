@@ -1,6 +1,7 @@
 package simdo.module.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +10,14 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import simdo.infra.common.auth.SessionMember;
 import simdo.module.member.form.SignUpForm;
 import simdo.module.member.form.UpdateForm;
 import simdo.module.member.validator.SignUpFormValidator;
 import simdo.module.member.validator.UpdateFormValidator;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,6 +31,7 @@ public class MemberController {
     private final SignUpFormValidator signUpFormValidator;
     private final MemberRepository memberRepository;
     private final UpdateFormValidator updateFormValidator;
+    private final HttpSession httpSession;
 
     @InitBinder("signUpForm")
     public void InitBinder(WebDataBinder dataBinder) {
@@ -95,13 +99,26 @@ public class MemberController {
     }
 
     @GetMapping("/profile/{email}")
-    public String viewProfile(@PathVariable String email, Model model, @CurrentMember Member member) {
-        Member memberToView = memberService.getAccount(email);
-        model.addAttribute(memberToView);
-        model.addAttribute("updateForm", new UpdateForm());
-        model.addAttribute("memberToView", memberToView); /*조민희코드추가*/
-        model.addAttribute("isOwner", memberToView.equals(member));
-        return "member/profile";
+    public String viewProfile(@PathVariable String email, Model model, HttpServletResponse response) throws IOException {
+        SessionMember sessionMember = (SessionMember) httpSession.getAttribute("member");
+        if (sessionMember != null) {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('심도 회원가입 유저만 프로필 기능을 사용하실 수 있습니다.'); history.back();</script>");
+            out.flush();
+
+            return "redirect:/";
+        }else {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            Member member = memberService.getAccount(auth.getName());
+            Member memberToView = memberService.getAccount(email);
+            model.addAttribute(memberToView);
+            model.addAttribute("updateForm", new UpdateForm());
+            model.addAttribute("memberToView", memberToView); /*조민희코드추가*/
+            model.addAttribute("isOwner", memberToView.equals(member));
+
+            return "member/profile";
+        }
     }
 
     @GetMapping("/email-login")
@@ -141,16 +158,31 @@ public class MemberController {
 
     @PostMapping("/quit/{email}")
     public void memberQuit(@PathVariable String email, Model model, HttpServletResponse response) throws IOException {
-        Member memberToQuit = memberService.getAccount(email);
-        model.addAttribute(memberToQuit);
-        model.addAttribute("memberToView", memberToQuit);
-        memberService.quit(memberToQuit);
-        SecurityContextHolder.clearContext();
+        try {
+            Member memberToQuit = memberService.getAccount(email);
+            model.addAttribute(memberToQuit);
+            model.addAttribute("memberToView", memberToQuit);
+            memberService.quit(memberToQuit);
+            SecurityContextHolder.clearContext();
 
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='/';</script>");
-        out.flush();
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='/';</script>");
+            out.flush();
+        }catch (IllegalArgumentException e) {
+            SessionMember sessionMember = (SessionMember) httpSession.getAttribute("member");
+            Member memberToQuit = memberService.getAccount(sessionMember.getEmail());
+            model.addAttribute(memberToQuit);
+            model.addAttribute("memberToView", memberToQuit);
+            memberService.quit(memberToQuit);
+            SecurityContextHolder.clearContext();
+            httpSession.removeAttribute("member");
+
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='/';</script>");
+            out.flush();
+        }
     }
 
     @PostMapping("/update-info/{email}")
