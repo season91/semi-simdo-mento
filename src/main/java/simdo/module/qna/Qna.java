@@ -44,15 +44,6 @@ public class Qna {
     @Column(name = "QSTN_COMENT")
     private String coment;
 
-    @Column(name = "USER_NM")
-    private String nm;
-
-
-    @JoinColumn(name = "user_no")
-    private long userNo;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
-
-
 }

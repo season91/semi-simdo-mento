@@ -9,8 +9,8 @@
 <div class="content">
     <div class="qna-main"> QNA 상세 </div>
     <div class="qna-body">
-        <h2 th:text="${qna.title}" class="qna-title"></h2>
-        <p th:text="${qna.content}" class="body"></p>
+        <h2 th:text="${qna.getTitle()}" class="qna-title"></h2>
+        <p th:text="${qna.getContent()}" class="body"></p>
     </div>
 </div>
 
