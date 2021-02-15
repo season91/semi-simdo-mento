@@ -1,16 +1,48 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts/fragments.html :: header"></head>
+<head th:replace="layouts/fragments.html::head">
+</head>
 <body>
-<!--NAVBAR-->
-<nav th:replace="layouts/fragments.html :: main-nav"></nav>
+<nav th:replace="layouts/fragments.html::main-nav"></nav>
 
 <!--CONTENTS-->
-<div class="m-5 bg-dark text-white text-center">
-    <h1 th:text="${username}"/>
-</div>
-<!--FOOTER-->
+<contents style="display: flex; justify-content: center; padding-top: 10vh; padding-bottom: 10vh;">
+    <div class="row">
+        <div class="card mb-3" style="max-width: 700px;" th:each="review : ${review}">
+            <div class="row g-0">
+                <div class="col-md-4" style="margin: auto">
+                    <img th:src="${review.thumbnail}" alt="..." >
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${review.mvTitle}"></h5>
+                        <p class="card-text" th:text="${review.score}"></p>
+                        <p class="card-text" th:text="${review.watchDate}"></p>
+                        <p class="card-text" th:text="${review.rvRegDate}"></p>
+                        <p class="card-text" th:text="${review.rvContent}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3" style="max-width: 700px;" th:each="line : ${line}">
+            <div class="row g-0">
+                <div class="col-md-4" style="margin: auto">
+                    <img th:src="${line.thumbnail}" alt="..." >
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${line.mvTitle}"></h5>
+                        <p class="card-text" th:text="${line.fmlContent}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<footer th:replace="layouts/fragments.html :: footer"></footer>
+</contents>
+<footer th:replace="layouts/fragments.html::footer"></footer>
 </body>
+
+<script>
+</script>
 </html>

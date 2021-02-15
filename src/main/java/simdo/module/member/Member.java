@@ -2,12 +2,12 @@ package simdo.module.member;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import simdo.module.mypage.BaseTimeEntity;
 import simdo.module.qna.Qna;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode(of = "id")
 @Table(name = "MEMBER")
-public class Member {
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -30,7 +30,6 @@ public class Member {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String password;
 
     private String gender; //컬럼추가
@@ -46,6 +45,15 @@ public class Member {
     private LocalDateTime emailCheckTokenGeneratedAt;
 
     private LocalDateTime joinedAt;
+
+    //구글 로그인 세팅
+    @Column
+    private String picture;
+
+    //구글 로그인 세팅
+    @Enumerated(EnumType.STRING)
+    //@Column(nullable = false)
+    private Role role = Role.GUEST;
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
@@ -71,4 +79,8 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Qna> qnaList;
+
+    public String getRoleKey(){
+        return this.role.getKey();
+    }
 }

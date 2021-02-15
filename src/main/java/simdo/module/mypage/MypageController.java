@@ -41,8 +41,8 @@ public class MypageController {
     }
 
     @GetMapping(value = "/writereview")
-    public String writeReview(Model model, String mvNo){
-        Movie movie = movieService.movieSearchByMvNo(mvNo);
+    public String writeReview(Model model, String mvno){
+        Movie movie = movieService.movieSearchByMvNo(mvno);
         model.addAttribute("movie",movie);
         return "mypage/writereview";
     }
@@ -55,12 +55,12 @@ public class MypageController {
         Long userNo = activeMember.getId();
 
         Review review = mypageService.saveReview(reviewForm, movie, userNo);
-        return "mywritelist";
+        return "mypage/mywritelist";
     }
 
     @GetMapping(value = "/writeline")
-    public String writeLine(Model model, String mvNo){
-        Movie movie = movieService.movieSearchByMvNo(mvNo);
+    public String writeLine(Model model, String mvno){
+        Movie movie = movieService.movieSearchByMvNo(mvno);
         model.addAttribute("movie",movie);
         return "mypage/writeline";
     }

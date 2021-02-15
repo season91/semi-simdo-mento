@@ -1,16 +1,56 @@
+
+
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts/fragments.html :: header"></head>
+<head th:replace="layouts/fragments.html::head">
+</head>
 <body>
-<!--NAVBAR-->
-<nav th:replace="layouts/fragments.html :: main-nav"></nav>
+<nav th:replace="layouts/fragments.html::main-nav"></nav>
 
 <!--CONTENTS-->
-<div class="m-5 bg-dark text-white text-center">
-    <h1 th:text="${username}"/>
-</div>
-<!--FOOTER-->
+<contents style="display: flex; justify-content: center; padding-top: 10vh; padding-bottom: 10vh;">
+    <div class="card mb-3" style="width: 700px;">
+        <div class="row" >
+            <div class="col-md-4" style="padding-top: 3rem; padding-bottom: 3rem";>
+                <figure><img th:src="${movie.poster}" alt="sing up image"></figure>
+            </div>
+            <div class="col-md-8" style="padding-top:1rem;">
+                <h2 class="form-title" th:text="${movie.mvTitle}"></h2>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="score" class="col-sm-2 control-label">평점</label>
+                        <div class="col-sm-10">
+                            <input type="number" step="0.1" min="0.0" max="5.0" class="form-control" id="score">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="datepick" class="col-sm-2 control-label">감상일</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="datepick">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="col-sm-4 control-label">후기내용</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" id="content"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">후기 등록</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-<footer th:replace="layouts/fragments.html :: footer"></footer>
+        </div>
+    </div>
+
+
+</contents>
+<footer th:replace="layouts/fragments.html::footer"></footer>
 </body>
+
+<script>
+</script>
 </html>

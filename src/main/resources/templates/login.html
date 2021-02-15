@@ -47,6 +47,9 @@
             <div class="form-group">
                 <button class="btn btn-success btn-block" type="submit"
                         aria-describedby="submitHelp">로그인</button>
+                <!--구글 로그인 버튼 추가-->
+                <button class="btn btn-success btn-block" type="button" onclick="location.href='/oauth2/authorization/google'"
+                        aria-describedby="submitHelp">구글 계정으로 로그인</button>
                 <small id="submitHelp" class="form-text text-muted">
                     심도에 처음 오신거라면 <a href="#" th:href="@{/member/sign-up}">계정을 먼저 만드세요.</a>
                 </small>
