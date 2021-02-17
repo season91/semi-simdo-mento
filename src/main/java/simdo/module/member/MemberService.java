@@ -36,8 +36,11 @@ public class MemberService implements UserDetailsService{
     public Member processNewMember(SignUpForm signUpForm) {
         Member newMember = saveNewMember(signUpForm);
         sendSignUpConfirmEmail(newMember);
+
         return newMember;
     }
+
+
 
     private Member saveNewMember(@Valid SignUpForm signUpForm) {
         Member member = Member.builder()
@@ -45,6 +48,8 @@ public class MemberService implements UserDetailsService{
                 .email(signUpForm.getEmail())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .build();
+        member.setRole(Role.ADMIN);
+
         member.generateEmailCheckToken();
         return memberRepository.save(member);
     }
@@ -171,4 +176,5 @@ public class MemberService implements UserDetailsService{
 
         emailService.sendEmail(emailMessage);
     }
+
 }

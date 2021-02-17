@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.List;
 
 @Getter
-public class UserAccount extends User {
+public class UserAccount extends User{
 
     private Member member;
 
@@ -15,4 +15,6 @@ public class UserAccount extends User {
         super(member.getEmail(), member.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         this.member = member;
     }
+
+
 }
